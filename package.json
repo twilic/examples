@@ -1,0 +1,54 @@
+{
+  "name": "@twilic/examples",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Official runnable examples for Twilic use cases.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twilic/examples.git"
+  },
+  "homepage": "https://github.com/twilic/examples#readme",
+  "bugs": {
+    "url": "https://github.com/twilic/examples/issues"
+  },
+  "type": "module",
+  "packageManager": "pnpm@10.18.1",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "example:api-response": "tsx api-response/server.ts",
+    "example:api-response:client": "tsx api-response/client.ts",
+    "example:websocket:simulate": "tsx websocket-session/simulate.ts",
+    "example:websocket": "tsx websocket-session/server.ts",
+    "example:websocket:client": "tsx websocket-session/client.ts",
+    "example:batch-records": "tsx batch-records/run.ts",
+    "example:telemetry": "tsx telemetry/run.ts",
+    "example:logs": "tsx logs/run.ts",
+    "example:cache-payload": "tsx cache-payload/run.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.4",
+    "@msgpack/msgpack": "^3.1.3",
+    "@twilic/core": "^3.0.0",
+    "@twilic/fetch": "^0.1.0",
+    "@twilic/hono": "^0.1.0",
+    "hono": "^4.0.0",
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@types/node": "^24.1.0",
+    "@types/ws": "^8.18.1",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.8.2"
+  }
+}
