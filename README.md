@@ -22,6 +22,7 @@ pnpm install
 | Example | Profile | Command |
 | --- | --- | --- |
 | [api-response](api-response/) | Stateless Batch | `pnpm example:api-response` |
+| [http-roundtrip](http-roundtrip/) | Stateless Dynamic | `pnpm example:http-roundtrip` |
 | [websocket-session](websocket-session/) | Stateful | `pnpm example:websocket:simulate` |
 | [batch-records](batch-records/) | Batch | `pnpm example:batch-records` |
 | [telemetry](telemetry/) | Batch (`col_batch`) | `pnpm example:telemetry` |
@@ -36,6 +37,21 @@ pnpm example:api-response
 
 # terminal 2
 pnpm example:api-response:client
+```
+
+### HTTP adapter round-trip
+
+Express / Hono / Fastify server with fetch or Axios client. Both sides use `application/vnd.twilic`.
+
+```bash
+# terminal 1 — pick one
+pnpm example:http-roundtrip
+pnpm example:http-roundtrip:hono
+pnpm example:http-roundtrip:fastify
+
+# terminal 2 — pick one
+pnpm example:http-roundtrip:client
+pnpm example:http-roundtrip:axios
 ```
 
 ### WebSocket session
