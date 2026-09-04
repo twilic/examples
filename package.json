@@ -13,7 +13,7 @@
     "url": "https://github.com/twilic/examples/issues"
   },
   "type": "module",
-  "packageManager": "pnpm@10.18.1",
+  "packageManager": "pnpm@11.25.0",
   "engines": {
     "node": ">=24"
   },
