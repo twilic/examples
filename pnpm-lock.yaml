@@ -16,7 +16,7 @@ importers:
         version: 3.1.3
       '@twilic/axios':
         specifier: ^0.1.2
-        version: 0.1.2(@twilic/core@3.1.0)(axios@1.18.1)
+        version: 0.1.2(@twilic/core@3.1.0)(axios@1.18.1(debug@4.4.3))
       '@twilic/core':
         specifier: ^3.1.0
         version: 3.1.0
@@ -32,9 +32,12 @@ importers:
       '@twilic/hono':
         specifier: ^0.1.0
         version: 0.1.0(@twilic/core@3.1.0)(hono@4.12.28)
+      '@twilic/websocket':
+        specifier: ^0.1.0
+        version: 0.1.0(@twilic/core@3.1.0)
       axios:
         specifier: ^1.11.0
-        version: 1.18.1
+        version: 1.18.1(debug@4.4.3)
       express:
         specifier: ^5.1.0
         version: 5.2.1
@@ -379,6 +382,12 @@ packages:
     peerDependencies:
       '@twilic/core': ^3.0.0
       hono: ^4.0.0
+
+  '@twilic/websocket@0.1.0':
+    resolution: {integrity: sha512-AS+JmId4d7yo+jQ0kJfyx33zszLvJPimF3eFIuxmDDhvstC/aGoxHPsezbmK1TBkrikuvadEBRAlXmnoEdaDMA==}
+    engines: {node: '>=24'}
+    peerDependencies:
+      '@twilic/core': ^3.0.0
 
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
@@ -1432,10 +1441,10 @@ snapshots:
 
   '@pinojs/redact@0.4.0': {}
 
-  '@twilic/axios@0.1.2(@twilic/core@3.1.0)(axios@1.18.1)':
+  '@twilic/axios@0.1.2(@twilic/core@3.1.0)(axios@1.18.1(debug@4.4.3))':
     dependencies:
       '@twilic/core': 3.1.0
-      axios: 1.18.1
+      axios: 1.18.1(debug@4.4.3)
 
   '@twilic/core@3.1.0': {}
 
@@ -1458,6 +1467,10 @@ snapshots:
     dependencies:
       '@twilic/core': 3.1.0
       hono: 4.12.28
+
+  '@twilic/websocket@0.1.0(@twilic/core@3.1.0)':
+    dependencies:
+      '@twilic/core': 3.1.0
 
   '@types/body-parser@1.19.6':
     dependencies:
@@ -1556,9 +1569,9 @@ snapshots:
       '@fastify/error': 4.2.0
       fastq: 1.20.1
 
-  axios@1.18.1:
+  axios@1.18.1(debug@4.4.3):
     dependencies:
-      follow-redirects: 1.16.0
+      follow-redirects: 1.16.0(debug@4.4.3)
       form-data: 4.0.6
       https-proxy-agent: 5.0.1
       proxy-from-env: 2.1.0
@@ -1845,7 +1858,9 @@ snapshots:
       path-exists: 5.0.0
       unicorn-magic: 0.1.0
 
-  follow-redirects@1.16.0: {}
+  follow-redirects@1.16.0(debug@4.4.3):
+    optionalDependencies:
+      debug: 4.4.3
 
   form-data@4.0.6:
     dependencies:

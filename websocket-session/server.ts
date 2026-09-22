@@ -1,21 +1,46 @@
 import { createServer } from "node:http";
-import { createSessionEncoder } from "@twilic/core";
-import { WebSocketServer } from "ws";
+import { createSessionEncoder, decode, init } from "@twilic/core";
+import { createTwilicWebSocket, type TwilicSocket } from "@twilic/websocket";
+import { WebSocketServer, type WebSocket } from "ws";
 import { makeMetrics, tickMetrics } from "../shared/fixtures.js";
+
+await init();
 
 const PORT = 8788;
 const TICK_MS = 1000;
 const MAX_TICKS = 10;
 
-const session = createSessionEncoder();
-let tick = 0;
-let current = makeMetrics();
+function asTwilicSocket(socket: WebSocket): TwilicSocket {
+  return {
+    send(data, options) {
+      socket.send(data, { binary: true, ...options });
+    },
+  };
+}
 
 const server = createServer();
 const wss = new WebSocketServer({ server });
 
 wss.on("connection", (socket) => {
   console.log("client connected");
+
+  const session = createSessionEncoder();
+  let tick = 0;
+  let current = makeMetrics();
+  let usePatch = false;
+  let lastFrameBytes = 0;
+  const twilicSocket = asTwilicSocket(socket);
+
+  const twilic = createTwilicWebSocket({
+    encode: (value) => {
+      const bytes = usePatch
+        ? session.encodePatch(value)
+        : session.encode(value);
+      lastFrameBytes = bytes.byteLength;
+      return bytes;
+    },
+    decode,
+  });
 
   const interval = setInterval(() => {
     if (socket.readyState !== socket.OPEN) {
@@ -25,20 +50,21 @@ wss.on("connection", (socket) => {
 
     if (tick > 0) {
       current = tickMetrics(current, tick);
+      usePatch = true;
+    } else {
+      usePatch = false;
     }
 
-    const bytes =
-      tick === 0 ? session.encode(current) : session.encodePatch(current);
-
-    socket.send(bytes, { binary: true });
+    twilic.send(twilicSocket, current);
     console.log(
-      `tick ${tick}: sent ${bytes.byteLength} bytes (${tick === 0 ? "full" : "patch"})`,
+      `tick ${tick}: sent ${lastFrameBytes} bytes (${usePatch ? "patch" : "full"})`,
     );
 
     tick += 1;
     if (tick >= MAX_TICKS) {
       console.log("resetting session after stream end");
       session.reset();
+      usePatch = false;
       tick = 0;
       current = makeMetrics();
       clearInterval(interval);
