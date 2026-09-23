@@ -47,10 +47,6 @@ export function tickMetrics(base: TwilicValue, tick: number): TwilicValue {
   return {
     ...record,
     cpu_pct: 40 + (tick % 20) * 0.5,
-    mem_mb: (2040n + BigInt(tick * 3)) as TwilicValue,
-    req_per_sec: 1200 + tick * 5,
-    p95_ms: 45 + (tick % 10),
-    queue_depth: BigInt(10 + (tick % 7)),
   };
 }
 

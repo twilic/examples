@@ -1,4 +1,5 @@
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - "@twilic/websocket@0.1.0"
+  - "@twilic/core@3.2.0"
+  - "@twilic/websocket@0.2.0"

@@ -1,17 +1,19 @@
 # WebSocket Session
 
-Stream live dashboard metrics over WebSocket with stateful Twilic compression via `@twilic/websocket`.
+Stream live dashboard metrics over WebSocket with the Twilic WebSocket Stateful Profile.
 
 ## Profile
 
-**Stateful** — `createSessionEncoder()` with `encode()` for the first frame and `encodePatch()` when only a few fields change.
+**Stateful** — `createTwilicWebSocket({ stateful: true })` keeps a per-connection outbound encoder and inbound decoder. `send()` always uses `encodePatch()`: the first frame is a full snapshot, and later frames are patches when a single field changes.
 
 ## Packages
 
-| Side   | Package             | Helpers                                 |
-| ------ | ------------------- | --------------------------------------- |
-| Server | `@twilic/websocket` | `createTwilicWebSocket` + session codec |
-| Client | `@twilic/websocket` | `parseTwilicMessage`                    |
+| Side | Package | Helpers |
+| --- | --- | --- |
+| Server | `@twilic/websocket` | `createTwilicWebSocket({ stateful: true })` and `send` |
+| Client | `@twilic/websocket` | `createTwilicWebSocket({ stateful: true })` and `attach` |
+
+Both sides use `@twilic/core` `^3.2.0` (`createSessionEncoder` / `createSessionDecoder`).
 
 ## Run
 
@@ -33,20 +35,16 @@ pnpm example:websocket:client
 
 ## What it shows
 
-- **simulate.ts** — 20 ticks of dashboard metrics; compares JSON, full `encode()`, and `encodePatch()` sizes per tick
-- **server.ts** — sends binary frames every second through `createTwilicWebSocket`; first tick is full, later ticks use patches
-- **client.ts** — `parseTwilicMessage` decodes full frames and reports patch decode failures
+- **simulate.ts** — 20 ticks of dashboard metrics; compares JSON, stateless `encode()`, and session `encodePatch()` sizes, and decodes each frame with `createSessionDecoder()`
+- **server.ts** — sends one binary frame per second through a stateful `send()`; the first tick is a full snapshot and later ticks are patches
+- **client.ts** — `attach()` reconstructs every tick, including patch frames
 
 ## When this fits
 
 - Live dashboards and game state
 - Ordered, reliable streams where most fields stay stable
-- Scenarios where 2–3 of 15 fields change per update
+- Scenarios where one field of a stable object changes per update
 
 ## Session recovery
 
-Call `session.reset()` after a disconnect so the next frame is a full stateless message, then resume patching. The demo keeps a session encoder **per connection**.
-
-## JS SDK note
-
-The current `@twilic/core` SDK exposes session **encode** APIs. Patch frame decoding on the client may require a matching session decoder in your language SDK. Use `simulate.ts` to evaluate payload savings; treat the WebSocket demo as a binary transport example with `@twilic/websocket`.
+Each WebSocket has its own directional session. Closing the socket discards that session. The next connection starts again with a full snapshot; previous base snapshots are not inherited. Pass the same session options on both sides (`maxBaseSnapshots: 8` in this demo).

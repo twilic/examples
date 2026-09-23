@@ -1,18 +1,24 @@
 import { init } from "@twilic/core";
-import { parseTwilicMessage } from "@twilic/websocket";
+import { createTwilicWebSocket } from "@twilic/websocket";
 import WebSocket from "ws";
+import { asTwilicSocket } from "./socket.js";
 
 await init();
 
 const URL = "ws://localhost:8788";
 
 const socket = new WebSocket(URL);
+const twilic = createTwilicWebSocket({
+  stateful: true,
+  session: { maxBaseSnapshots: 8 },
+});
+const transport = asTwilicSocket(socket);
 
 socket.on("open", () => {
   console.log(`connected to ${URL}`);
 });
 
-socket.on("message", async (data, isBinary) => {
+socket.on("message", (data, isBinary) => {
   const size = Buffer.isBuffer(data)
     ? data.byteLength
     : Array.isArray(data)
@@ -20,21 +26,23 @@ socket.on("message", async (data, isBinary) => {
       : data.byteLength;
 
   console.log(`received ${size} bytes (binary=${isBinary})`);
+});
 
-  try {
-    const value = await parseTwilicMessage(data, { isBinary });
+twilic.attach(
+  transport,
+  (value) => {
     const record = value as Record<string, unknown>;
     const keys = Object.keys(record).slice(0, 5).join(", ");
     console.log(`  decoded fields (first 5): ${keys}`);
     console.log(`  cpu_pct=${record.cpu_pct}, mem_mb=${record.mem_mb}`);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    console.log(`  decode skipped: ${message}`);
-    console.log(
-      "  patch frames may require a session decoder; see simulate.ts for size wins.",
-    );
-  }
-});
+  },
+  {
+    onError(error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error(`  decode error: ${message}`);
+    },
+  },
+);
 
 socket.on("close", () => {
   console.log("connection closed");
