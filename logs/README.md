@@ -9,7 +9,7 @@ Structured log shipping with string and shape interning.
 ## Run
 
 ```bash
-pnpm example:logs
+bun run example:logs
 ```
 
 ## What it shows

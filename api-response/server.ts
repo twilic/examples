@@ -63,5 +63,5 @@ serve({ fetch: app.fetch, port: PORT }, () => {
   console.log(`\nAPI server listening on http://localhost:${PORT}`);
   console.log(`  GET /users      — Twilic batch (${TWILIC_CONTENT_TYPE})`);
   console.log(`  GET /users.json — JSON comparison`);
-  console.log(`\nRun: pnpm example:api-response:client`);
+  console.log(`\nRun: bun run example:api-response:client`);
 });

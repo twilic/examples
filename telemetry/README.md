@@ -9,7 +9,7 @@ Batch high-frequency telemetry events with column-oriented compression.
 ## Run
 
 ```bash
-pnpm example:telemetry
+bun run example:telemetry
 ```
 
 ## What it shows

@@ -21,13 +21,13 @@ Start any one server, then a client in a second terminal.
 
 ```bash
 # terminal 1 — pick one server
-pnpm example:http-roundtrip           # Express (default)
-pnpm example:http-roundtrip:hono
-pnpm example:http-roundtrip:fastify
+bun run example:http-roundtrip           # Express (default)
+bun run example:http-roundtrip:hono
+bun run example:http-roundtrip:fastify
 
 # terminal 2 — pick one client
-pnpm example:http-roundtrip:client    # fetch
-pnpm example:http-roundtrip:axios
+bun run example:http-roundtrip:client    # fetch
+bun run example:http-roundtrip:axios
 ```
 
 Default URL: `http://localhost:8788/echo`.

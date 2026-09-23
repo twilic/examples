@@ -9,34 +9,34 @@ Twilic is especially useful when data contains repeated structures, repeated str
 ## Prerequisites
 
 - Node.js 24+
-- [pnpm](https://pnpm.io/) (recommended)
+- [Bun](https://bun.sh/) (recommended)
 
 ## Setup
 
 ```bash
-pnpm install
+bun install
 ```
 
 ## Examples
 
 | Example | Profile | Command |
 | --- | --- | --- |
-| [api-response](api-response/) | Stateless Batch | `pnpm example:api-response` |
-| [http-roundtrip](http-roundtrip/) | Stateless Dynamic | `pnpm example:http-roundtrip` |
-| [websocket-session](websocket-session/) | Stateful | `pnpm example:websocket:simulate` |
-| [batch-records](batch-records/) | Batch | `pnpm example:batch-records` |
-| [telemetry](telemetry/) | Batch (`col_batch`) | `pnpm example:telemetry` |
-| [logs](logs/) | Dynamic + Batch | `pnpm example:logs` |
-| [cache-payload](cache-payload/) | Dynamic (stateless) | `pnpm example:cache-payload` |
+| [api-response](api-response/) | Stateless Batch | `bun run example:api-response` |
+| [http-roundtrip](http-roundtrip/) | Stateless Dynamic | `bun run example:http-roundtrip` |
+| [websocket-session](websocket-session/) | Stateful | `bun run example:websocket:simulate` |
+| [batch-records](batch-records/) | Batch | `bun run example:batch-records` |
+| [telemetry](telemetry/) | Batch (`col_batch`) | `bun run example:telemetry` |
+| [logs](logs/) | Dynamic + Batch | `bun run example:logs` |
+| [cache-payload](cache-payload/) | Dynamic (stateless) | `bun run example:cache-payload` |
 
 ### API response (HTTP)
 
 ```bash
 # terminal 1
-pnpm example:api-response
+bun run example:api-response
 
 # terminal 2
-pnpm example:api-response:client
+bun run example:api-response:client
 ```
 
 ### HTTP adapter round-trip
@@ -45,33 +45,33 @@ Express / Hono / Fastify server with fetch or Axios client. Both sides use `appl
 
 ```bash
 # terminal 1 — pick one
-pnpm example:http-roundtrip
-pnpm example:http-roundtrip:hono
-pnpm example:http-roundtrip:fastify
+bun run example:http-roundtrip
+bun run example:http-roundtrip:hono
+bun run example:http-roundtrip:fastify
 
 # terminal 2 — pick one
-pnpm example:http-roundtrip:client
-pnpm example:http-roundtrip:axios
+bun run example:http-roundtrip:client
+bun run example:http-roundtrip:axios
 ```
 
 ### WebSocket session
 
 ```bash
 # size comparison (recommended first)
-pnpm example:websocket:simulate
+bun run example:websocket:simulate
 
 # live stream
-pnpm example:websocket          # terminal 1
-pnpm example:websocket:client   # terminal 2
+bun run example:websocket          # terminal 1
+bun run example:websocket:client   # terminal 2
 ```
 
 ### CLI examples
 
 ```bash
-pnpm example:batch-records
-pnpm example:telemetry
-pnpm example:logs
-pnpm example:cache-payload
+bun run example:batch-records
+bun run example:telemetry
+bun run example:logs
+bun run example:cache-payload
 ```
 
 ## Goals

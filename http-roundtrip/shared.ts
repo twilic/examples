@@ -19,8 +19,8 @@ export function logServerReady(framework: string): void {
     `  POST /echo — Twilic request/response (${"application/vnd.twilic"})`,
   );
   console.log(`\nIn another terminal:`);
-  console.log(`  pnpm example:http-roundtrip:client`);
-  console.log(`  pnpm example:http-roundtrip:axios`);
+  console.log(`  bun run example:http-roundtrip:client`);
+  console.log(`  bun run example:http-roundtrip:axios`);
 }
 
 export function logClientResult(label: string, data: unknown): void {

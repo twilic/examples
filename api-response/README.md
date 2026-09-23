@@ -10,10 +10,10 @@ Return paginated user lists as compact Twilic batch payloads over HTTP.
 
 ```bash
 # terminal 1
-pnpm example:api-response
+bun run example:api-response
 
 # terminal 2
-pnpm example:api-response:client
+bun run example:api-response:client
 ```
 
 ## Endpoints

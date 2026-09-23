@@ -9,7 +9,7 @@ Send many homogeneous records in one payload using Twilic batch encoding.
 ## Run
 
 ```bash
-pnpm example:batch-records
+bun run example:batch-records
 ```
 
 ## What it shows

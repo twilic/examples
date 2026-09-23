@@ -20,17 +20,17 @@ The live server and client use `@twilic/websocket`. The simulation uses `@twilic
 Simulation (size comparison, recommended first):
 
 ```bash
-pnpm example:websocket:simulate
+bun run example:websocket:simulate
 ```
 
 Live WebSocket demo:
 
 ```bash
 # terminal 1
-pnpm example:websocket
+bun run example:websocket
 
 # terminal 2
-pnpm example:websocket:client
+bun run example:websocket:client
 ```
 
 ## What it shows

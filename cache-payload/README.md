@@ -9,7 +9,7 @@ Store compact binary session blobs in a key-value cache.
 ## Run
 
 ```bash
-pnpm example:cache-payload
+bun run example:cache-payload
 ```
 
 ## What it shows

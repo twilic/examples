@@ -55,5 +55,5 @@ wss.on("connection", (socket) => {
 
 server.listen(PORT, () => {
   console.log(`WebSocket server listening on ws://localhost:${PORT}`);
-  console.log("Run: pnpm example:websocket:client");
+  console.log("Run: bun run example:websocket:client");
 });
