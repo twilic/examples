@@ -4,16 +4,16 @@ Stream live dashboard metrics over WebSocket with the Twilic WebSocket Stateful 
 
 ## Profile
 
-**Stateful** — `createTwilicWebSocket({ stateful: true })` keeps a per-connection outbound encoder and inbound decoder. `send()` always uses `encodePatch()`: the first frame is a full snapshot, and later frames are patches when a single field changes.
+**Stateful** — `createTwilicWebSocket(socket, { stateful: true })` binds one connection. `send()` uses `encodePatch()`: the first frame is a full snapshot, and later frames are patches when a single field changes.
 
 ## Packages
 
 | Side | Package | Helpers |
 | --- | --- | --- |
-| Server | `@twilic/websocket` | `createTwilicWebSocket({ stateful: true })` and `send` |
-| Client | `@twilic/websocket` | `createTwilicWebSocket({ stateful: true })` and `attach` |
+| Server | `@twilic/websocket` | `createTwilicWebSocket(socket, { stateful: true })` and `send` |
+| Client | `@twilic/websocket` | `createTwilicWebSocket(socket, { stateful: true })` and `onMessage` |
 
-Both sides use `@twilic/core` `^3.2.0` (`createSessionEncoder` / `createSessionDecoder`).
+The live server and client use `@twilic/websocket`. The simulation uses `@twilic/core` `createSessionEncoder()` and `createSessionDecoder()` directly.
 
 ## Run
 
@@ -37,7 +37,7 @@ pnpm example:websocket:client
 
 - **simulate.ts** — 20 ticks of dashboard metrics; compares JSON, stateless `encode()`, and session `encodePatch()` sizes, and decodes each frame with `createSessionDecoder()`
 - **server.ts** — sends one binary frame per second through a stateful `send()`; the first tick is a full snapshot and later ticks are patches
-- **client.ts** — `attach()` reconstructs every tick, including patch frames
+- **client.ts** — `onMessage()` reconstructs every tick, including patch frames
 
 ## When this fits
 

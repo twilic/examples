@@ -3,7 +3,6 @@ import { init } from "@twilic/core";
 import { createTwilicWebSocket } from "@twilic/websocket";
 import { WebSocketServer } from "ws";
 import { makeMetrics, tickMetrics } from "../shared/fixtures.js";
-import { asTwilicSocket } from "./socket.js";
 
 await init();
 
@@ -12,32 +11,19 @@ const TICK_MS = 1000;
 const MAX_TICKS = 10;
 const STATE_PATCH = 0x0a;
 
-const twilic = createTwilicWebSocket({
-  stateful: true,
-  session: { maxBaseSnapshots: 8 },
-});
-
-function frameKind(frame: Uint8Array): "full" | "patch" {
-  return frame[0] === STATE_PATCH ? "patch" : "full";
-}
-
 const server = createServer();
 const wss = new WebSocketServer({ server });
 
 wss.on("connection", (socket) => {
   console.log("client connected");
 
-  let tick = 0;
-  let current = makeMetrics();
-  let lastFrameBytes = 0;
-  let lastKind: "full" | "patch" = "full";
-  const transport = asTwilicSocket(socket, (frame) => {
-    lastFrameBytes = frame.byteLength;
-    lastKind = frameKind(frame);
+  const twilic = createTwilicWebSocket(socket, {
+    stateful: true,
+    session: { maxBaseSnapshots: 8 },
   });
 
-  // attach() drops this connection's session when the socket closes.
-  twilic.attach(transport, () => {});
+  let tick = 0;
+  let current = makeMetrics();
 
   const interval = setInterval(() => {
     if (socket.readyState !== socket.OPEN) {
@@ -49,8 +35,9 @@ wss.on("connection", (socket) => {
       current = tickMetrics(current, tick);
     }
 
-    twilic.send(transport, current);
-    console.log(`tick ${tick}: sent ${lastFrameBytes} bytes (${lastKind})`);
+    const frame = twilic.send(current);
+    const kind = frame[0] === STATE_PATCH ? "patch" : "full";
+    console.log(`tick ${tick}: sent ${frame.byteLength} bytes (${kind})`);
 
     tick += 1;
     if (tick >= MAX_TICKS) {

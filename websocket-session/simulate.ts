@@ -50,5 +50,5 @@ console.log(
   "\nencodePatch() keeps one directional session. The first frame is a full snapshot; later frames are patches when one field changes.",
 );
 console.log(
-  "The live WebSocket demo uses createTwilicWebSocket({ stateful: true }); see websocket-session/README.md.",
+  "The live WebSocket demo uses createTwilicWebSocket(socket, { stateful: true }); see websocket-session/README.md.",
 );

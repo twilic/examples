@@ -33,8 +33,8 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0(@twilic/core@3.2.0)(hono@4.12.28)
       '@twilic/websocket':
-        specifier: ^0.2.0
-        version: 0.2.0(@twilic/core@3.2.0)
+        specifier: ^0.3.0
+        version: 0.3.0(@twilic/core@3.2.0)
       axios:
         specifier: ^1.11.0
         version: 1.18.1(debug@4.4.3)
@@ -383,8 +383,8 @@ packages:
       '@twilic/core': ^3.0.0
       hono: ^4.0.0
 
-  '@twilic/websocket@0.2.0':
-    resolution: {integrity: sha512-T0eqxr6ei2pJvecEVkBGhgo7X7+sf3tJPucjw4DqZsf73ilyh94iZiCa/ecJeiO+D/HaL37bflzujBQQorJjYQ==}
+  '@twilic/websocket@0.3.0':
+    resolution: {integrity: sha512-NsSVTuI5VM9lwz4mg35IPsINqH5MT0KLW6Q+PCAM2rRwGbvYtoxPAwFORB1ILJXlJL1kga4Z+LHszrL2S+PgHg==}
     engines: {node: '>=24'}
     peerDependencies:
       '@twilic/core': ^3.2.0
@@ -1468,7 +1468,7 @@ snapshots:
       '@twilic/core': 3.2.0
       hono: 4.12.28
 
-  '@twilic/websocket@0.2.0(@twilic/core@3.2.0)':
+  '@twilic/websocket@0.3.0(@twilic/core@3.2.0)':
     dependencies:
       '@twilic/core': 3.2.0
 
